@@ -1,0 +1,10 @@
+/* One stylesheet for all your pages */
+
+body {
+    background: #35281D;
+}
+
+header {
+    border: #63ADF2 solid 5px;
+    background: #FCD757;
+}

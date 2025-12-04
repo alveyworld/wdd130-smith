@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Advanced CSS Child Selectors Demo</title>
+  <style>
+    /* General reset-ish */
+    * {
+        margin: 0;
+        padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, sans-serif;
+      margin: 0;
+      padding: 2rem;
+      background: #f5f5f7;
+      color: #222;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    section {
+      background: #fff;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    section h2 {
+      margin-top: 0;
+      margin-bottom: 1rem;
+    }
+
+    /* 1) Direct child selector: style only immediate children of .card-list */
+    .card-list > .card {
+      border: 1px solid #ddd;
+      padding: 1rem;
+      border-radius: 6px;
+      margin-bottom: 1rem;
+      background: #fafafa;
+    }
+
+    /* 2) Descendant selector: style all links inside .card, no matter how deep */
+    .card a {
+      color: #0066cc;
+      text-decoration: none;
+    }
+
+    .card a:hover {
+      text-decoration: underline;
+    }
+
+    /* 3) :nth-child() to style specific cards */
+    .card-list > .card:nth-child(1) {
+      border-left: 4px solid #4caf50; /* first card */
+    }
+
+    .card-list > .card:nth-child(2) {
+      border-left: 4px solid #ff9800; /* second card */
+    }
+
+    .card-list > .card:nth-child(3) {
+      border-left: 4px solid #f44336; /* third card */
+    }
+
+    /* 4) :nth-of-type() to style the first paragraph in each card */
+    .card p:nth-of-type(1) {
+      font-weight: bold;
+      margin-top: 0;
+    }
+
+    /* 5) :not() to add border only between items (not on last child) */
+    .menu {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid #ddd;
+      max-width: 260px;
+    }
+
+    .menu > li {
+      padding: 0.75rem 1rem;
+      background: #fff;
+    }
+
+    .menu > li:not(:last-child) {
+      border-bottom: 1px solid #eee;
+    }
+
+    /* 6) Sibling selectors: style the first paragraph after an h3 */
+    .article h3 + p {
+      margin-top: 0;
+      font-style: italic;
+    }
+
+    /* Any paragraph after .highlighted in the same container */
+    .article .highlighted ~ p {
+      color: #555;
+    }
+
+    /* 7) :first-child, :last-child, :only-child */
+    .article > p:first-child {
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.85rem;
+      color: #888;
+    }
+
+    .article > p:last-child {
+      margin-bottom: 0;
+      color: #333;
+      font-weight: 500;
+    }
+
+    .only-child-demo > p:only-child {
+      text-align: center;
+      padding: 1rem;
+      background: #e3f2fd;
+      border-radius: 6px;
+      margin: 0;
+    }
+
+    /* 8) Attribute selector on children */
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    .tags > li {
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      border: 1px solid #ddd;
+      background: #fafafa;
+    }
+
+    .tags > li[data-level="info"] {
+      border-color: #2196f3;
+    }
+
+    .tags > li[data-level="warning"] {
+      border-color: #ff9800;
+    }
+
+    .tags > li[data-level="danger"] {
+      border-color: #f44336;
+      color: #f44336;
+    }
+
+    /* 9) :is() to group multiple child types */
+    .card :is(h3, h4) {
+      margin-top: 0;
+      color: #333;
+    }
+
+    /* 10) :has() to style parent based on its children (supported in modern browsers) */
+    /* Card that contains an image at any depth gets a different background */
+    .card:has(img) {
+      background: #fffdf6;
+    }
+
+    /* Form group with invalid input */
+    .form-group:has(input:invalid) label {
+      color: #f44336;
+    }
+
+    .form-group:has(input:invalid) input {
+      border-color: #f44336;
+    }
+
+    .form {
+      max-width: 320px;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .form-group label {
+      font-size: 0.9rem;
+    }
+
+    .form-group input {
+      padding: 0.5rem 0.75rem;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+
+    .form button {
+      padding: 0.6rem 1rem;
+      border-radius: 4px;
+      border: none;
+      background: #0066cc;
+      color: #fff;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+
+    .form button:hover {
+      background: #004f9f;
+    }
+
+    /* Just for layout of sections */
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1.3fr);
+      gap: 2rem;
+    }
+
+    @media (max-width: 800px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Advanced CSS Child Selectors Demo</h1>
+
+  <section>
+    <h2>Cards (.card-list > .card)</h2>
+    <div class="card-list">
+      <article class="card">
+        <h3>First Card</h3>
+        <p>This is the first paragraph in the first card.</p>
+        <p>Another paragraph inside the same card.</p>
+        <p>Check out the <a href="#">documentation</a>.</p>
+      </article>
+
+      <article class="card">
+        <h3>Second Card (with image)</h3>
+        <p>First paragraph in the second card.</p>
+        <img src="https://via.placeholder.com/150" alt="Placeholder image" />
+        <p>Image makes this card have a different background because of <code>:has(img)</code>.</p>
+      </article>
+
+      <article class="card">
+        <h3>Third Card</h3>
+        <p>First paragraph in the third card.</p>
+        <p>Cards are styled using <code>:nth-child()</code> for the colored border.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="layout">
+    <div>
+      <h2>Menu with :not(), siblings, and child selectors</h2>
+
+      <ul class="menu">
+        <li>Dashboard</li>
+        <li>Projects</li>
+        <li>Team</li>
+        <li>Settings</li>
+      </ul>
+
+      <div class="article" style="margin-top:1.5rem;">
+        <p>meta info · updated today</p>
+        <h3>Article Title</h3>
+        <p>This paragraph is directly after the h3, so it gets italic style via <code>h3 + p</code>.</p>
+        <p class="highlighted">This paragraph is highlighted.</p>
+        <p>Any paragraph that comes after the highlighted one gets a different color via <code>.highlighted ~ p</code>.</p>
+        <p>Another paragraph affected by the sibling selector.</p>
+      </div>
+
+      <div class="only-child-demo" style="margin-top:1.5rem;">
+        <h3>Only Child Example</h3>
+        <p>This paragraph is the only child, so it is centered and has a blue background.</p>
+      </div>
+    </div>
+
+    <div>
+      <h2>Tags, Attributes, and Form with :has()</h2>
+
+      <ul class="tags">
+        <li data-level="info">info</li>
+        <li data-level="warning">warning</li>
+        <li data-level="danger">danger</li>
+        <li>neutral</li>
+      </ul>
+
+      <form class="form" novalidate style="margin-top:1.5rem;">
+        <div class="form-group">
+          <label for="email">Email (required, invalid if empty)</label>
+          <input id="email" type="email" required placeholder="you@example.com" />
+        </div>
+
+        <div class="form-group">
+          <label for="name">Name (optional)</label>
+          <input id="name" type="text" placeholder="Your name" />
+        </div>
+
+        <button type="submit">Submit</button>
+      </form>
+      <p style="margin-top:0.75rem; font-size:0.85rem; color:#666;">
+        The parent <code>.form-group</code> turns red when its input is invalid,
+        thanks to <code>.form-group:has(input:invalid)</code>.
+      </p>
+    </div>
+  </section>
+</body>
+</html>
